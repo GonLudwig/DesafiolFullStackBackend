@@ -38,7 +38,34 @@ class ConsultaCnpj extends Controller
                 ], 200);
             }
         }
+        
+        $result = $result->json();
 
-        return response()->json($result->json(), 200);
+        $datas = array(
+            strtotime($result['data_opcao_pelo_mei']),
+            'data_opcao_pelo_mei',
+            strtotime($result['data_exclusao_do_mei']),
+            'data_exclusao_do_mei',
+            strtotime($result['data_situacao_especial']),
+            'data_situacao_especial',
+            strtotime($result['data_opcao_pelo_simples']),
+            'data_opcao_pelo_simples',
+            strtotime($result['data_situacao_cadastral']),
+            'data_situacao_cadastral',
+            strtotime($result['data_exclusao_do_simples']),
+            'data_exclusao_do_simples'
+        );
+        
+        for ($i=0; $i <= 10; $i++) {
+            $max = 0;
+            if ($datas[$i] > $datas[$max]) {
+                $max = $i;
+            }
+            $dataAtualizda = $datas[$max+1];
+        }
+
+        $result["data_ultima_atualizacao"] = $result[$dataAtualizda];
+
+        return response()->json($result, 200);
     }
 }
