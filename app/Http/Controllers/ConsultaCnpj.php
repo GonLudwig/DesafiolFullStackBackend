@@ -56,14 +56,14 @@ class ConsultaCnpj extends Controller
             'data_exclusao_do_simples'
         );
         
+        $max = 0;
         for ($i=0; $i <= 10; $i++) {
-            $max = 0;
             if ($datas[$i] > $datas[$max]) {
                 $max = $i;
             }
-            $dataAtualizda = $datas[$max+1];
         }
-
+        $dataAtualizda = $datas[$max+1];
+        
         $result["data_ultima_atualizacao"] = $result[$dataAtualizda];
 
         return response()->json($result, 200);
